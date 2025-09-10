@@ -1,0 +1,62 @@
+import 'package:eff_mob_tes_app/data/const.dart';
+import 'package:eff_mob_tes_app/services/screen_helper.dart';
+import 'package:eff_mob_tes_app/view/favorites_page.dart';
+import 'package:eff_mob_tes_app/view/home_page.dart';
+import 'package:eff_mob_tes_app/widgets/appbar_content.dart';
+import 'package:flutter/material.dart';
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int _currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: ScreenHelper.isMobile(context)
+          ? null
+          : AppBar(
+              title: AppBarContent(
+                currentPageIndex: _currentPageIndex,
+                onTap: (page) {
+                  setState(() {
+                    _currentPageIndex = page;
+                  });
+                },
+              ),
+            ),
+      body: IndexedStack(
+        index: _currentPageIndex,
+        children: [HomePage(), FavoritesPage()],
+      ),
+      bottomNavigationBar: ScreenHelper.isMobile(context)
+          ? BottomNavigationBar(
+              selectedItemColor: Color(kColorAccent),
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
+              currentIndex: _currentPageIndex,
+              onTap: (value) {
+                setState(() {
+                  _currentPageIndex = value;
+                });
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.contacts),
+                  label: 'Characters',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.grade, size: 28),
+                  label: 'Favorites',
+                ),
+              ],
+            )
+          : null,
+    );
+  }
+}
