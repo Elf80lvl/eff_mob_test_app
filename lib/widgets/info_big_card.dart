@@ -5,7 +5,6 @@ import 'package:eff_mob_tes_app/model/character_model.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:hive_flutter/adapters.dart';
 
 class InfoBigCard extends StatelessWidget {
   final Character character;

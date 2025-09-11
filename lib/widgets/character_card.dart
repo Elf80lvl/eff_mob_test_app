@@ -103,7 +103,7 @@ class _CharacterCardState extends State<CharacterCard> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 5,
-                                      vertical: 4,
+                                      vertical: 5,
                                     ),
                                     child: SizedBox(
                                       // width: ScreenHelper.isMobile(context)
@@ -117,7 +117,7 @@ class _CharacterCardState extends State<CharacterCard> {
                                             color: Colors.white,
                                             fontSize:
                                                 ScreenHelper.isMobile(context)
-                                                ? 12
+                                                ? 14
                                                 : 14,
                                           ),
                                         ),
@@ -140,39 +140,40 @@ class _CharacterCardState extends State<CharacterCard> {
                         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
                         child: Container(
                           // color: Color(kColorAccent).withValues(alpha: 0.2),
-                          color: Colors.black.withValues(alpha: 0.3),
+                          color: Colors.black.withValues(alpha: 0.5),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   widget.character.name,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 20,
                                     // fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Status: ${widget.character.status}',
+                                  widget.character.status,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: ScreenHelper.isMobile(context)
-                                        ? 12
-                                        : 14,
+                                        ? 14
+                                        : 16,
                                   ),
                                 ),
-                                // const SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
-                                  'Species: ${widget.character.species}',
+                                  widget.character.species,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: ScreenHelper.isMobile(context)
-                                        ? 12
-                                        : 14,
+                                        ? 14
+                                        : 16,
                                   ),
                                 ),
                               ],
@@ -184,7 +185,11 @@ class _CharacterCardState extends State<CharacterCard> {
                   ),
 
                 //*кнопка избранное
-                Positioned(top: 0, right: 0, child: FavButton()),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: FavButton(character: widget.character),
+                ),
               ],
             ),
           ),

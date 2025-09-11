@@ -7,7 +7,6 @@ import 'package:eff_mob_tes_app/widgets/button_close_window.dart';
 import 'package:eff_mob_tes_app/widgets/fav_button.dart';
 import 'package:eff_mob_tes_app/widgets/info_big_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class CharacterCardContent extends StatelessWidget {
   final Character character;
@@ -82,7 +81,7 @@ class CharacterCardContent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FavButton(),
+                  FavButton(character: character),
                   if (!ScreenHelper.isMobile(context))
                     const SizedBox(width: 16),
                   if (!ScreenHelper.isMobile(context)) ButtonCloseWindow(),

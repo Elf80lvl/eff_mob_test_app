@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: ScreenHelper.isMobile(context)
           ? null
@@ -33,9 +33,14 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
             ),
-      body: IndexedStack(
-        index: _currentPageIndex,
-        children: [HomePage(), FavoritesPage(), SettingsPage()],
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kAppMaxWidth),
+          child: IndexedStack(
+            index: _currentPageIndex,
+            children: [HomePage(), FavoritesPage(), SettingsPage()],
+          ),
+        ),
       ),
       bottomNavigationBar: ScreenHelper.isMobile(context)
           ? Padding(

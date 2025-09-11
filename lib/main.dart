@@ -1,16 +1,22 @@
 import 'package:eff_mob_tes_app/data/themes.dart';
+import 'package:eff_mob_tes_app/logic/favorites/bloc/favorites_bloc.dart';
 import 'package:eff_mob_tes_app/logic/home_page/bloc/home_bloc_bloc.dart';
 import 'package:eff_mob_tes_app/logic/theme/bloc/theme_bloc.dart';
+import 'package:eff_mob_tes_app/services/favorites_keeper.dart';
 import 'package:eff_mob_tes_app/view/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final favoritesKeeper = await FavoritesKeeper.create();
+  runApp(MyApp(favoritesKeeper: favoritesKeeper));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final FavoritesKeeper favoritesKeeper;
+
+  const MyApp({super.key, required this.favoritesKeeper});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               ThemeBloc()..add(ThemeSetInitialTheme(isDark: isDark)),
+        ),
+        BlocProvider(
+          create: (context) =>
+              FavoritesBloc(favoritesKeeper)..add(FavoritesInitial()),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -40,8 +50,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-        //*TODO dark theme and switch
-        //*TODO favorites database
