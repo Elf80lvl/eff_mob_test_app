@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
         } else if (state is HomeBlocLoaded) {
           return Center(
             child: SafeArea(
+              bottom: false,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   maxWidth: ScreenHelper.isMobile(context)

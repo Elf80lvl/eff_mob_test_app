@@ -5,6 +5,7 @@ import 'package:eff_mob_tes_app/model/character_model.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';
 import 'package:eff_mob_tes_app/widgets/button_close_window.dart';
 import 'package:eff_mob_tes_app/widgets/fav_button.dart';
+import 'package:eff_mob_tes_app/widgets/info_big_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -14,7 +15,7 @@ class CharacterCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 800,
       width: ScreenHelper.isMobile(context)
           ? ScreenHelper.getScreenWidth(context)
@@ -44,7 +45,7 @@ class CharacterCardContent extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.black.withValues(alpha: 0.1),
-                    Colors.black.withValues(alpha: 0.1),
+                    Colors.black.withValues(alpha: 0.5),
                     Colors.black.withValues(alpha: 0.9),
                   ],
                 ),
@@ -64,7 +65,8 @@ class CharacterCardContent extends StatelessWidget {
                   height: 3,
                   width: 50,
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
+                    // color: Colors.black.withValues(alpha: 0.5),
+                    color: Color(kColorAccent),
                     borderRadius: BorderRadius.circular(99),
                   ),
                 ),
@@ -83,42 +85,16 @@ class CharacterCardContent extends StatelessWidget {
                   FavButton(),
                   if (!ScreenHelper.isMobile(context))
                     const SizedBox(width: 16),
-                  if (!ScreenHelper.isMobile(context))
-                    Positioned(top: 8, right: 8, child: ButtonCloseWindow()),
+                  if (!ScreenHelper.isMobile(context)) ButtonCloseWindow(),
                 ],
               ),
             ),
           ),
 
-          //info cards
           Positioned.fill(
             child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: AnimateList(
-                    interval: 200.ms,
-                    effects: [FadeEffect(duration: 300.ms)],
-                    children: [
-                      InfoMiniCard(title: character.name, subtitle: 'name'),
-                      InfoMiniCard(title: character.gender, subtitle: 'gender'),
-                      InfoMiniCard(
-                        title: character.species,
-                        subtitle: 'species',
-                      ),
-                      InfoMiniCard(title: character.status, subtitle: 'status'),
-                      InfoMiniCard(title: character.type, subtitle: 'type'),
-                      InfoMiniCard(
-                        title: character.location.name,
-                        subtitle: 'location',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              alignment: Alignment.bottomCenter,
+              child: InfoBigCard(character: character),
             ),
           ),
         ],

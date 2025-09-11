@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const kAppVersion = '0.1.0';
 const kMobileBreakpoint = 800.0;
 const kColorAccent = 0xFF13A100;
 const kPaddingApp = 16.0;

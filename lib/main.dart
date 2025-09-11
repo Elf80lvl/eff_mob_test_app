@@ -1,5 +1,6 @@
 import 'package:eff_mob_tes_app/data/themes.dart';
 import 'package:eff_mob_tes_app/logic/home_page/bloc/home_bloc_bloc.dart';
+import 'package:eff_mob_tes_app/logic/theme/bloc/theme_bloc.dart';
 import 'package:eff_mob_tes_app/view/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,17 +14,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark =
+        View.of(context).platformDispatcher.platformBrightness ==
+        Brightness.dark;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => HomeBlocBloc()),
-        // BlocProvider(create: (context) => SubjectBloc()),
+        BlocProvider(
+          create: (context) =>
+              ThemeBloc()..add(ThemeSetInitialTheme(isDark: isDark)),
+        ),
       ],
-      child: MaterialApp(
-        title: 'Characters',
-        debugShowCheckedModeBanner: false,
-        theme: kLightTheme,
-
-        home: const MainPage(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Characters',
+            debugShowCheckedModeBanner: false,
+            theme: kLightTheme,
+            darkTheme: kDarkTheme,
+            themeMode: state.isDark ? ThemeMode.dark : ThemeMode.light,
+            home: const MainPage(),
+          );
+        },
       ),
     );
   }
