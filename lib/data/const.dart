@@ -1,4 +1,4 @@
-const kAppVersion = '0.1.2';
+const kAppVersion = '0.1.3';
 const kMobileBreakpoint = 800.0;
 const kColorAccent = 0xFF13A100;
 const kPaddingApp = 16.0;
