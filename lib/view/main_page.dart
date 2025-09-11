@@ -45,17 +45,27 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: ScreenHelper.isMobile(context)
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
                   child: BottomNavigationBar(
+                    elevation: 1,
                     selectedItemColor: Color(kColorAccent),
                     showUnselectedLabels: false,
                     showSelectedLabels: true,
                     currentIndex: _currentPageIndex,
+
                     onTap: (value) {
                       setState(() {
                         _currentPageIndex = value;
@@ -63,7 +73,10 @@ class _MainPageState extends State<MainPage> {
                     },
                     items: [
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.contacts),
+                        icon: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 7),
+                          child: Icon(Icons.contacts),
+                        ),
                         label: 'Characters',
                       ),
                       BottomNavigationBarItem(

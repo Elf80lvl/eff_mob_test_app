@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:eff_mob_tes_app/data/const.dart';
 import 'package:eff_mob_tes_app/logic/home_page/bloc/home_bloc_bloc.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';

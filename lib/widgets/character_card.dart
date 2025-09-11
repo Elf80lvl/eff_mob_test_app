@@ -186,8 +186,8 @@ class _CharacterCardState extends State<CharacterCard> {
 
                 //*кнопка избранное
                 Positioned(
-                  top: 0,
-                  right: 0,
+                  top: 6,
+                  right: 6,
                   child: FavButton(character: widget.character),
                 ),
               ],
