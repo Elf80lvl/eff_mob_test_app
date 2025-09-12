@@ -3,6 +3,7 @@ import 'package:eff_mob_tes_app/services/favorites_keeper.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';
 import 'package:eff_mob_tes_app/widgets/character_card.dart';
 import 'package:eff_mob_tes_app/widgets/loading_indicator.dart';
+import 'package:eff_mob_tes_app/widgets/no_favorites_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,9 +49,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     .toList();
 
                 if (favoriteCharacters.isEmpty) {
-                  return const Center(
-                    child: Text('No favorite characters yet'),
-                  );
+                  return const Center(child: NoFavoritesWidget());
                 }
 
                 return Center(

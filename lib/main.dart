@@ -6,9 +6,11 @@ import 'package:eff_mob_tes_app/services/favorites_keeper.dart';
 import 'package:eff_mob_tes_app/view/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   final favoritesKeeper = await FavoritesKeeper.create();
   runApp(MyApp(favoritesKeeper: favoritesKeeper));
 }

@@ -62,12 +62,12 @@ class _CharacterCardState extends State<CharacterCard> {
         child: MouseRegion(
           onHover: (event) {
             setState(() {
-              _isHover = true;
+              if (!ScreenHelper.isMobile(context)) _isHover = true;
             });
           },
           onExit: (event) {
             setState(() {
-              _isHover = false;
+              if (!ScreenHelper.isMobile(context)) _isHover = false;
             });
           },
           cursor: _isHover ? SystemMouseCursors.click : MouseCursor.defer,

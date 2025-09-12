@@ -14,3 +14,5 @@ final class HomeBlocGetDataEvent extends HomeBlocEvent {
   @override
   List<Object> get props => [page];
 }
+
+final class HomeBlocClearCacheEvent extends HomeBlocEvent {}

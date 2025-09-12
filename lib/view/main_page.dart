@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(18),
                   child: BottomNavigationBar(
                     elevation: 1,
                     selectedItemColor: Color(kColorAccent),

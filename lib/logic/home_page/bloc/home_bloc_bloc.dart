@@ -3,6 +3,7 @@ import 'package:eff_mob_tes_app/model/character_model.dart';
 import 'package:eff_mob_tes_app/repo/netw.dart';
 import 'package:eff_mob_tes_app/services/data_cache.dart';
 import 'package:equatable/equatable.dart';
+import 'dart:developer';
 
 part 'home_bloc_event.dart';
 part 'home_bloc_state.dart';
@@ -35,6 +36,7 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
         //если есть в кэше берем оттуда
         if (cachedCharacters != null && cachedCharacters.isNotEmpty) {
           pageCharacters = cachedCharacters;
+          log('got cached charactes');
 
           hasMore = true;
           //берем новых персонажей из сети
@@ -46,6 +48,7 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
           hasMore = characterModel.info.next != null;
           // Сохраняем в кэш
           await cacheService.saveCharacters(currentPage, pageCharacters);
+          log('characters saved in cache');
         }
 
         // Добавляем новых персонажей к существующим
@@ -63,6 +66,16 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
       } catch (e) {
         emit(HomeBlocError(message: e.toString()));
       }
+    });
+
+    //*clear cache
+    on<HomeBlocClearCacheEvent>((event, emit) async {
+      emit(HomeBlocLoading());
+      final cacheService = DataCache();
+      await cacheService.clearCache();
+      log('cache deleted');
+      //*get new data
+      add(HomeBlocGetDataEvent(page: 1));
     });
   }
 }
