@@ -1,4 +1,3 @@
-# eff_mob_tes_app
 
 Тестовое задание для компании
 
@@ -104,11 +103,29 @@ _Вмеcто того, чтобы добавлять объектов персо
     final favoriteCharacters = characters.where((char) => favoriteIds.contains(char.id.toString())).toList();
 ```
 
+* При нажатии на кнопку избранное на странице избранных произойдет удаление персонажа из избранных (lib/services/favorites_keeper.dart):
+  ```
+  Future<bool> removeFromFavorites(String characterId) async {
+    final favorites = getFavorites();
+    if (favorites.contains(characterId)) {
+      favorites.remove(characterId);
+      return await _prefs.setStringList(_key, favorites);
+    }
+    return false;
+  }
+  ```
+
 <b>5. Пользователь переходит на страницу настроек</b>
 * При смене темы приложения, происходит перключение на темную если была светлая и наоборот (lib/logic/theme/bloc/theme_bloc.dart):
 ```
      on<ThemeSwitchThemeEvent>((event, emit) {
       emit(ThemeWithDataState(isDark: !state.isDark));
     });
+```
+
+* При нажатии на удаление кэша произодет удаление сохраненных песронажей из базы данных:
+```
+    final box = await Hive.openBox(boxName);
+    await box.clear();
 ```
 
