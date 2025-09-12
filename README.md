@@ -3,15 +3,6 @@
 <img width="600" height="233" alt="rick-welcome" src="https://github.com/user-attachments/assets/47ff6eb7-2fb7-4604-87e1-7a94cef798d7" />
 </p>
 
-
-
-## Скриншоты
-<p align="center">
-<img width="691" height="375" alt="rick-screens" src="https://github.com/user-attachments/assets/4415aeb5-ae18-4b08-a993-f85928d84bb1" />
-</p>
-
-## Видеодемо
-
 ## Описание
 Приложение показывает список персонажей из мультсериала используя публичный API.
 
@@ -27,6 +18,16 @@
 * Современный дизайн, цвета подходящие под стиль мультсериала
 * NavBar и AppBar для переключения между экранами
 * Адаптивная верстка - desktop, mobile
+
+## Скриншоты
+<p align="center">
+<img width="691" height="375" alt="rick-screens" src="https://github.com/user-attachments/assets/4415aeb5-ae18-4b08-a993-f85928d84bb1" />
+</p>
+
+## Видеодемо
+
+https://github.com/user-attachments/assets/b9152bf9-859e-4962-8953-f752568aac28
+
 
 ## Библиотеки
 В приложении использованы следующие библиотеки:
