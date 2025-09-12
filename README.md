@@ -129,3 +129,11 @@ _Вмеcто того, чтобы добавлять объектов персо
     await box.clear();
 ```
 
+## Тестирование
+Тестирование происходило:
+* web: https://elf80lvl.github.io/rick/
+* android physical device (Android 13) 
+
+
+
+
