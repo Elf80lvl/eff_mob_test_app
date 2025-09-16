@@ -9,4 +9,28 @@ class Netw {
     final response = await dio.get(url);
     return response;
   }
+
+  static Future<Response?> getCharacterById(String id) async {
+    try {
+      final dio = Dio();
+      final url = '$urlCharacter/$id';
+      final response = await dio.get(url);
+      return response;
+    } catch (e) {
+      print('Error getting character by id: $e');
+      return null;
+    }
+  }
+
+  // static Future<Response?> getCharacterById(String id) async {
+  //   try {
+  //     final dio = Dio();
+  //     final url = '$urlCharacter/$id';
+  //     final response = await dio.get(url);
+  //     return response;
+  //   } catch (e) {
+  //     print('Error getting character by id: $e');
+  //     return null;
+  //   }
+  // }
 }

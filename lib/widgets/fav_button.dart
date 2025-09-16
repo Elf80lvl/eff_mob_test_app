@@ -35,7 +35,10 @@ class _FavButtonState extends State<FavButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
-        final isFavorite = state.isFavorite(widget.character.id);
+        // final isFavorite = state.isFavorite(widget.character.id);
+        final isFavorite = state is FavoritesStateLoaded
+            ? state.isFavorite(widget.character.id)
+            : false;
 
         return ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(999),

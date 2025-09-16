@@ -17,3 +17,12 @@ class FavoritesToggle extends FavoritesEvent {
   @override
   List<Object> get props => [characterId];
 }
+
+class FavoritesLoadCharacters extends FavoritesEvent {
+  final List<String> favoriteIds;
+
+  const FavoritesLoadCharacters(this.favoriteIds);
+
+  @override
+  List<Object> get props => [favoriteIds];
+}
