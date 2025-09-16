@@ -79,9 +79,12 @@ class _CharacterCardState extends State<CharacterCard> {
             elevation: 0,
             child: Stack(
               children: [
-                CachedCharacterImage(
-                  imageUrl: widget.character.image,
-                  fit: BoxFit.cover,
+                Center(
+                  child: CachedCharacterImage(
+                    width: double.infinity,
+                    imageUrl: widget.character.image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 //*name
                 _isHover

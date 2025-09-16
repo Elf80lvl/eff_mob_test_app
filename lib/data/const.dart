@@ -1,4 +1,4 @@
-const kAppVersion = '0.1.6';
+const kAppVersion = '0.1.7';
 const kMobileBreakpoint = 800.0;
 const kColorAccent = 0xFF13A100;
 const kColorImageCache = 0xFFE0E0E0;

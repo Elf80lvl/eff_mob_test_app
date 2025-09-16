@@ -2,6 +2,7 @@ import 'package:eff_mob_tes_app/data/const.dart';
 import 'package:eff_mob_tes_app/logic/home_page/bloc/home_bloc_bloc.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';
 import 'package:eff_mob_tes_app/widgets/character_card.dart';
+import 'package:eff_mob_tes_app/widgets/home_page_error_widget.dart';
 import 'package:eff_mob_tes_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         if (state is HomeBlocLoading && (state is! HomeBlocLoaded)) {
           return LoadingIndicator();
         } else if (state is HomeBlocError) {
-          return Center(child: Text('Error: ${state.message}'));
+          return HomePageErrorWidget(message: state.message);
         } else if (state is HomeBlocLoaded) {
           return Center(
             child: SafeArea(

@@ -14,7 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
-  // Initialize services
   final favoritesKeeper = await FavoritesKeeper.create();
   final dataCache = DataCache();
   final charactersRepository = CharactersApiRepository();

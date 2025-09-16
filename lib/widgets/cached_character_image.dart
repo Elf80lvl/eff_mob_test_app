@@ -32,8 +32,8 @@ class CachedCharacterImage extends StatelessWidget {
         color: Color(kColorImageCache),
         child: const Icon(Icons.error),
       ),
-      memCacheWidth: (width ?? kCharacterImageWidth).toInt(),
-      memCacheHeight: (height ?? kCharacterImageHeight).toInt(),
+      // memCacheWidth: (width ?? kCharacterImageWidth).toInt(),
+      // memCacheHeight: (height ?? kCharacterImageHeight).toInt(),
     );
   }
 }
