@@ -11,5 +11,5 @@ abstract class ThemeState extends Equatable {
 class ThemeInitial extends ThemeState {}
 
 class ThemeWithDataState extends ThemeState {
-  const ThemeWithDataState({required bool isDark}) : super(isDark: isDark);
+  const ThemeWithDataState({required super.isDark});
 }

@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eff_mob_tes_app/model/character_model.dart';
-import 'package:eff_mob_tes_app/repo/netw.dart';
+import 'package:eff_mob_tes_app/repo/characters_repository.dart';
 import 'package:eff_mob_tes_app/services/data_cache.dart';
 import 'package:equatable/equatable.dart';
 import 'dart:developer';
@@ -9,73 +9,84 @@ part 'home_bloc_event.dart';
 part 'home_bloc_state.dart';
 
 class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
-  HomeBlocBloc() : super(HomeBlocInitial()) {
-    on<HomeBlocGetDataEvent>((event, emit) async {
-      // Эмитим загрузку если нет данных загруженных
-      if (state is! HomeBlocLoaded) {
-        emit(HomeBlocLoading());
-      }
+  final CharactersRepository _charactersRepository;
+  final DataCache _cacheService;
 
-      // сохраняем предыдущие данные, если они есть
-      List<Character> oldCharacters = [];
-      if (state is HomeBlocLoaded) {
-        oldCharacters = (state as HomeBlocLoaded).characters;
-      }
+  HomeBlocBloc({
+    required CharactersRepository charactersRepository,
+    required DataCache cacheService,
+  }) : _charactersRepository = charactersRepository,
+       _cacheService = cacheService,
+       super(HomeBlocInitial()) {
+    on<HomeBlocGetDataEvent>((event, emit) => _onGetData(event, emit));
+    on<HomeBlocClearCacheEvent>((event, emit) => _onClearCache(event, emit));
+  }
 
-      int currentPage = event.page;
-      final cacheService = DataCache();
-
-      try {
-        // Проверяем есть ли кэш для текущей страницы
-        List<Character>? cachedCharacters = await cacheService.getCharacters(
-          currentPage,
-        );
-        List<Character> pageCharacters;
-        bool hasMore = true;
-
-        //если есть в кэше берем оттуда
-        if (cachedCharacters != null && cachedCharacters.isNotEmpty) {
-          pageCharacters = cachedCharacters;
-          log('got cached charactes');
-
-          hasMore = true;
-          //берем новых персонажей из сети
-        } else {
-          final response = await Netw.getCharacters(page: currentPage);
-          final data = response.data;
-          final characterModel = CharacterModel.fromJson(data);
-          pageCharacters = characterModel.results;
-          hasMore = characterModel.info.next != null;
-          // Сохраняем в кэш
-          await cacheService.saveCharacters(currentPage, pageCharacters);
-          log('characters saved in cache');
-        }
-
-        // Добавляем новых персонажей к существующим
-        final newCharacters = List<Character>.from(oldCharacters)
-          ..addAll(pageCharacters);
-        final uniqueCharacters = newCharacters.toSet().toList();
-
-        emit(
-          HomeBlocLoaded(
-            characters: uniqueCharacters,
-            page: currentPage,
-            hasMore: hasMore,
-          ),
-        );
-      } catch (e) {
-        emit(HomeBlocError(message: e.toString()));
-      }
-    });
-
-    //*clear cache
-    on<HomeBlocClearCacheEvent>((event, emit) async {
+  Future<void> _onGetData(
+    HomeBlocGetDataEvent event,
+    Emitter<HomeBlocState> emit,
+  ) async {
+    if (state is! HomeBlocLoaded) {
       emit(HomeBlocLoading());
-      final cacheService = DataCache();
-      await cacheService.clearCache();
-      log('cache deleted');
-      //*get new data
-      add(HomeBlocGetDataEvent(page: 1));
-    });
+    }
+
+    List<Character> oldCharacters = [];
+    if (state is HomeBlocLoaded) {
+      oldCharacters = (state as HomeBlocLoaded).characters;
+    }
+
+    int currentPage = event.page;
+
+    try {
+      List<Character>? cachedCharacters = await _cacheService.getCharacters(
+        currentPage,
+      );
+      List<Character> pageCharacters;
+      bool hasMore = true;
+
+      //есть ли кэш
+      if (cachedCharacters != null && cachedCharacters.isNotEmpty) {
+        pageCharacters = cachedCharacters;
+        log('Got characters from cache');
+        hasMore = true;
+        //нет кэша, загружаем из сети
+      } else {
+        final response = await _charactersRepository.getCharacters(
+          page: currentPage,
+        );
+        final characterModel = CharacterModel.fromJson(response.data);
+        pageCharacters = characterModel.results;
+        hasMore = characterModel.info.next != null;
+        //сохраняем в кэш
+        await _cacheService.saveCharacters(currentPage, pageCharacters);
+        log('Characters saved to cache');
+      }
+      //объединяем старых и новых персонажей в список, убираем дубликаты
+      final newCharacters = List<Character>.from(oldCharacters)
+        ..addAll(pageCharacters);
+      final uniqueCharacters = newCharacters.toSet().toList();
+
+      emit(
+        HomeBlocLoaded(
+          characters: uniqueCharacters,
+          page: currentPage,
+          hasMore: hasMore,
+        ),
+      );
+    } catch (e) {
+      emit(HomeBlocError(message: e.toString()));
+    }
+  }
+
+  Future<void> _onClearCache(
+    HomeBlocClearCacheEvent event,
+    Emitter<HomeBlocState> emit,
+  ) async {
+    emit(HomeBlocLoading());
+    //очищаем кэш
+    await _cacheService.clearCache();
+    log('Cache cleared');
+    //загружаем заново первую страницу
+    add(HomeBlocGetDataEvent(page: 1));
   }
 }

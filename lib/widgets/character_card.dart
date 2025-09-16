@@ -5,6 +5,7 @@ import 'package:eff_mob_tes_app/model/character_model.dart';
 import 'package:eff_mob_tes_app/services/screen_helper.dart';
 import 'package:eff_mob_tes_app/widgets/character_card_content.dart';
 import 'package:eff_mob_tes_app/widgets/fav_button.dart';
+import 'package:eff_mob_tes_app/widgets/cached_character_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -78,10 +79,8 @@ class _CharacterCardState extends State<CharacterCard> {
             elevation: 0,
             child: Stack(
               children: [
-                Image.network(
-                  widget.character.image,
-                  // height: 100,
-                  // width: 100,
+                CachedCharacterImage(
+                  imageUrl: widget.character.image,
                   fit: BoxFit.cover,
                 ),
                 //*name

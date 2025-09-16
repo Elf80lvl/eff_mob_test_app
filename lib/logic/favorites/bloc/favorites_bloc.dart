@@ -1,8 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eff_mob_tes_app/services/favorites_keeper.dart';
 import 'package:eff_mob_tes_app/model/character_model.dart';
-import 'package:eff_mob_tes_app/repo/netw.dart';
+import 'package:eff_mob_tes_app/repo/characters_api.dart';
 import 'package:eff_mob_tes_app/services/data_cache.dart';
 
 part 'favorites_event.dart';
@@ -65,7 +67,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
         // нет в кэше, получаем с API
         try {
-          final response = await Netw.getCharacterById(id);
+          final response = await CharactersApi.getCharacterById(id);
           if (response != null) {
             final character = Character.fromJson(response.data);
             allCharacters.add(character);
@@ -73,7 +75,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
             await _cacheCharacter(character);
           }
         } catch (e) {
-          print('Error getting character from network $id: $e');
+          log('Error getting character from network $id: $e');
         }
       }
 

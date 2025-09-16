@@ -5,23 +5,35 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:eff_mob_tes_app/repo/characters_repository.dart';
+import 'package:eff_mob_tes_app/services/data_cache.dart';
 import 'package:eff_mob_tes_app/services/favorites_keeper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:eff_mob_tes_app/main.dart';
 
-late FavoritesKeeper favoritesKeeper;
+late FavoritesKeeper _favoritesKeeper;
+late DataCache _dataCache;
+late CharactersRepository _charactersRepository;
 
-void initial_launch() async {
-  favoritesKeeper = await FavoritesKeeper.create();
+void initialLaunch() async {
+  _favoritesKeeper = await FavoritesKeeper.create();
+  _dataCache = DataCache();
+  _charactersRepository = CharactersApiRepository();
 }
 
 void main() {
-  initial_launch();
+  initialLaunch();
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(favoritesKeeper: favoritesKeeper));
+    await tester.pumpWidget(
+      MyApp(
+        favoritesKeeper: _favoritesKeeper,
+        dataCache: _dataCache,
+        charactersRepository: _charactersRepository,
+      ),
+    );
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

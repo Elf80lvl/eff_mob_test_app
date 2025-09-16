@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
-class Netw {
+class CharactersApi {
   static const urlCharacter = 'https://rickandmortyapi.com/api/character';
 
   static getCharacters({int page = 1}) async {
@@ -17,20 +19,8 @@ class Netw {
       final response = await dio.get(url);
       return response;
     } catch (e) {
-      print('Error getting character by id: $e');
+      log('Error getting character by id: $e');
       return null;
     }
   }
-
-  // static Future<Response?> getCharacterById(String id) async {
-  //   try {
-  //     final dio = Dio();
-  //     final url = '$urlCharacter/$id';
-  //     final response = await dio.get(url);
-  //     return response;
-  //   } catch (e) {
-  //     print('Error getting character by id: $e');
-  //     return null;
-  //   }
-  // }
 }
